@@ -1,5 +1,6 @@
-Lab Task
+Introduction to Object-Oriented Programming (OOP) with Python Lab
 
+Lab Exercises
 Exercise 1
 1.	Create a Student class with attributes name, id, and grade_level.
 2.	Add a method display_info that returns a string with the student's details.
