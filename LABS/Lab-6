@@ -1,0 +1,72 @@
+Data Visualization using Matplotlib 
+
+Lab Exercises
+Exercise 1:
+Plot a histogram for the CRIM (crime rate) variable and describe its distribution.
+Code:
+
+# ! pip install numpy
+! pip install pandas
+! pip install matplotlib
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+
+data=pd.read_csv('boston.csv')
+plt.hist(data['CRIM'], bins=30, color='skyblue', edgecolor='black')
+plt.title("Distribution of crime rates(CRIM)")
+plt.xlabel("crime rate")
+plt.ylabel("frequency")
+plt.show()
+ 
+Exercise 2:
+Create a scatter plot showing the relationship between DIS (distance to employment centers) and MEDV.
+Code:
+
+# ! pip install numpy
+! pip install pandas
+! pip install matplotlib
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+
+data=pd.read_csv('boston.csv')
+plt.scatter(data['DIS'],data['MEDV'], color='teal')
+plt.title("Relationship between DIS and MEDV")
+plt.xlabel("average number of rooms per dwell ing (DIS)")
+plt.ylabel("price of homes(MEDV)")
+plt.show()
+ 
+Exercise 3:
+Plot a bar chart showing the average MEDV for different RAD (accessibility to highways) values.
+Code:
+
+# ! pip install numpy
+! pip install pandas
+! pip install matplotlib
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+
+avg_price = data.groupby('RAD')['MEDV'].mean()
+plt.bar(avg_price.index, avg_price.values, color='green')
+plt.title("Average MEDV by RAD")
+plt.ylabel("Average House Price ($1000s)")
+plt.show()
+
+Exercise 4:
+Draw a boxplot for MEDV across different RAD categories.
+Code:
+
+# ! pip install numpy
+! pip install pandas
+! pip install matplotlib
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+data.boxplot(column='MEDV',by='RAD',grid=False)
+plt.title("boxplot of MEDV by RAD")
+plt.suptitle('')
+plt.xlabel("RAD (0=no,1=yes)")
+plt.ylabel("house price ($1000s)")
+plt.show()
