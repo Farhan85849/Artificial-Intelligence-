@@ -1,0 +1,87 @@
+Lab Tasks 
+1.	Write a program that asks the user for details like name, age, email, etc., and then displays them.
+
+name = input("Enter your name: ")
+age = input("Enter your age: ")
+email = input("Enter your email: ")
+phone = input("Enter your phone number: ")
+
+
+print("\n--- User Details ---")
+print("Name:", name)
+print("Age:", age)
+print("Email:", email)
+print("Phone:", phone)
+
+2.	Write a program that calculates the area of a rectangle using:
+Formula: Area = Length X Width
+
+
+length = float(input("Enter the length: "))
+width = float(input("Enter the width: "))
+
+area = length * width
+
+print("The area of the rectangle is:", area)
+
+3.	Write a program to build a simple To-Do List using functions to:
+•	Add tasks
+•	View tasks
+•	Remove tasks
+tasks = []
+
+def add():
+    task = input("Enter task: ")
+    tasks.append(task)
+    print("Task added!\n")
+
+def view():
+    print("\nYour tasks:")
+    for t in tasks:
+        print("-", t)
+    print()
+
+def remove():
+    task = input("Enter task to remove: ")
+    if task in tasks:
+        tasks.remove(task)
+        print("Task removed!\n")
+    else:
+        print("Task not found!\n")
+
+while True:
+    print("1. Add Task")
+    print("2. View Tasks")
+    print("3. Remove Task")
+    print("4. Exit")
+
+    choice = input("Choose: ")
+
+    if choice == "1":
+        add()
+    elif choice == "2":
+        view()
+    elif choice == "3":
+        remove()
+    elif choice == "4":
+        break
+    else:
+        print("Invalid choice!\n")
+4.	Create a simple number guessing game that incorporates everything.
+ 
+import random
+
+print("Welcome to the Number Guessing Game!")
+
+secret_number = random.randint(1, 10)
+
+guess = int(input("Guess a number between 1 and 10: "))
+
+if guess == secret_number:
+    print("🎉 Correct! You guessed the right number!")
+else:
+    print("❌ Wrong guess!")
+    print("The correct number was:", secret_number)
+
+print("Thanks for playing!")
+
