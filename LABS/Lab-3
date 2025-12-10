@@ -1,0 +1,86 @@
+Introduction to Data Structures
+in python  programming
+
+Lab Exercises
+1.	Create a list of 6 integers. Print the list, its length, and the sum of all elements. Replace the third element with its square, append a new number, and sort the list in descending order.
+
+numbers = [1, 2, 3, 4, 5, 6]
+print("Original list:", numbers)
+print("Length of list:", len(numbers))
+print("Sum of elements:", sum(numbers))
+
+numbers[2] = numbers[2] ** 2
+print("After squaring 3rd element:", numbers)
+
+numbers.append(7)
+print("After appending :", numbers)
+
+numbers.sort(reverse=True)
+print("Sorted in descending order:", numbers)
+ 
+2.	Create a tuple containing 5 colors. Print the tuple and access the second and last elements. Unpack the tuple into variables and print them. Try to modify an element and explain the error in a comment.
+
+colors=("red", "blue", "green", "yellow", "black")
+print("Tuple of colors:", colors)
+print("Second element:", colors[1])
+print("Last element:", colors[-1])
+
+c1, c2, c3, c4, c5 = colors
+print("Unpacked values:", c1, c2, c3, c4, c5)
+
+colors[0] = "Orange"  #TypeError: tuples are immutable
+ 
+3.	Create two sets: one with numbers 1 to 5 and another with 4 to 8. Compute and print their union, intersection, and difference. Add a new number to the first set and remove one from the second, handling potential errors.
+
+set1 = {1, 2, 3, 4, 5}
+set2 = {4, 5, 6, 7, 8}
+
+print("Set 1:", set1)
+print("Set 2:", set2)
+
+print("Union:", set1 | set2)
+print("Intersection:", set1 & set2)
+print("Difference (set1 - set2):", set1 - set2)
+
+set1.add(10)
+print("After adding 10 to set1:", set1)
+
+set2.discard(8)
+print("After trying to remove 8 from set2:", set2)
+ 
+4.	Create a dictionary for a book with keys: title, author, year, and genres (a list of strings). Update the year to 2023, add a key for ISBN, and remove the genres key. Print all keys and values separately.
+book={
+    "Tittle":"The true Leader",
+    "Author":"Noman Tariq",
+    "year": 1935,
+    "genres":["Leadership of Imran Khan"]
+    }
+book["year"] = 2023
+book["ISBN"] = "123456789"
+del book["genres"]
+
+for key,value in book.items():
+ print(f"{key}:{value}")
+ 
+5.	Create a dictionary where each value is a list of 3 items (e.g., student names to their grades). Convert one list to a tuple and another to a set. Print the modified dictionary and check if a specific item exists in one of the collections.
+
+students = {
+    "d1": ["farhan", "A", 9282],
+    "d2": ["Noman", "B", 9702],
+    "d3": ["Tasaddaq", "C", 9569]
+}
+
+students["d1"] = tuple(students["d1"])
+students["d2"] = set(students["d2"])
+
+print("\nDictionary:")
+print(students)
+if"farhan" in students["d1"]:
+    print("\nfarhan exists")
+else:
+    print("\nfarhan doesnot exist")
+
+if "B" in students["d2"]:
+    print("Nouman has B grade")
+else:
+    print("Nouman does not have B grade")
