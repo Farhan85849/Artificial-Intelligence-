@@ -1,0 +1,188 @@
+Lab Task
+
+Exercise 1
+1.	Create a Student class with attributes name, id, and grade_level.
+2.	Add a method display_info that returns a string with the student's details.
+3.	Create two Student objects and call display_info for each.
+
+class Student:
+    def __init__(self, name, id, grade_level):
+        self.name = name
+        self.id = id
+        self.grade_level = grade_level
+
+    def display_info(self):
+        return f"Name: {self.name}, ID: {self.id}, Grade Level: {self.grade_level}"
+
+student1 = Student("Ali", 101, "10th Grade")
+student2 = Student("Ayesha", 102, "9th Grade")
+
+print(student1.display_info())
+print(student2.display_info())
+
+Exercise 2
+1.	Create a LibraryBook class with private attributes __title, __author, and __is_checked_out.
+2.	Add methods check_out and return_book to update __is_checked_out.
+3.	Add a getter method get_book_info to return the book's details and status.
+4.	Test the class by creating a book, checking it out, and returning it.
+
+class LibraryBook:
+    def __init__(self, title, author):
+        self.__title = title
+        self.__author = author
+        self.__is_checked_out = False  
+
+    def check_out(self):
+        if not self.__is_checked_out:
+            self.__is_checked_out = True
+            return f"'{self.__title}' has been checked out."
+        else:
+            return f"'{self.__title}' is already checked out."
+
+    def return_book(self):
+        if self.__is_checked_out:
+            self.__is_checked_out = False
+            return f"'{self.__title}' has been returned."
+        else:
+            return f"'{self.__title}' was not checked out."
+
+    def get_book_info(self):
+        status = "Checked Out" if self.__is_checked_out else "Available"
+        return f"Title: {self.__title}, Author: {self.__author}, Status: {status}"
+
+book1 = LibraryBook("The Great Gatsby", "F. Scott Fitzgerald")
+
+print(book1.get_book_info())   
+print(book1.check_out())       
+print(book1.get_book_info())  
+print(book1.return_book())     
+print(book1.get_book_info())   
+ 
+Exercise 3
+1.	Create a parent class Animal with attributes name and species, and a method make_sound.
+2.	Create a child class Dog that inherits from Animal and overrides make_sound to return "Woof!".
+3.	Create a Dog object and test the make_sound method.
+
+class Animal:
+    def __init__(self, name, species):
+        self.name = name
+        self.species = species
+
+    def make_sound(self):
+        return "Some generic sound"
+
+class Dog(Animal):
+    def make_sound(self):
+        return "Woof!"
+
+dog1 = Dog("Buddy", "Dog")
+print(dog1.make_sound())
+
+Exercise 4
+1.	Create a parent class Employee with a method calculate_salary.
+2.	Create two child classes FullTimeEmployee and PartTimeEmployee that override calculate_salary.
+3.	For FullTimeEmployee, return a fixed salary (e.g., 50000).
+4.	For PartTimeEmployee, calculate salary based on hours worked and hourly rate.
+5.	Create a list of employees and print their salaries using a loop.
+
+class Employee:
+    def calculate_salary(self):
+        return 0
+
+class FullTimeEmployee(Employee):
+    def calculate_salary(self):
+        return 50000
+
+class PartTimeEmployee(Employee):
+    def __init__(self, hours_worked, hourly_rate):
+        self.hours_worked = hours_worked
+        self.hourly_rate = hourly_rate
+
+    def calculate_salary(self):
+        return self.hours_worked * self.hourly_rate
+
+employees = [
+    FullTimeEmployee(),
+    PartTimeEmployee(40, 500),
+    PartTimeEmployee(20, 600)
+]
+for emp in employees:
+    print("Salary:", emp.calculate_salary())
+ 
+Exercise 5
+1.	Complete the Library class by adding methods to check out and return books by title.
+2.	Test the system by adding multiple books, checking some out, and listing available books.
+3.	Add error handling for cases like checking out an unavailable book.
+
+class LibraryBook:
+    def __init__(self, title, author):
+        self.title = title
+        self.author = author
+        self.is_checked_out = False
+
+    def check_out(self):
+        if not self.is_checked_out:
+            self.is_checked_out = True
+            return True
+        return False
+
+    def return_book(self):
+        if self.is_checked_out:
+            self.is_checked_out = False
+            return True
+        return False
+
+    def get_info(self):
+        status = "Checked Out" if self.is_checked_out else "Available"
+        return f"Title: {self.title}, Author: {self.author}, Status: {status}"
+
+class Library:
+    def __init__(self):
+        self.books = []
+
+    def add_book(self, book):
+        self.books.append(book)
+
+    def check_out_book(self, title):
+        for book in self.books:
+            if book.title == title:
+                if book.check_out():
+                    return f"'{title}' has been checked out."
+                else:
+                    return f"'{title}' is not available."
+        return f"Book '{title}' not found in library."
+
+    def return_book(self, title):
+        for book in self.books:
+            if book.title == title:
+                if book.return_book():
+                    return f"'{title}' has been returned."
+                else:
+                    return f"'{title}' was not checked out."
+        return f"Book '{title}' not found in library."
+
+    def list_available_books(self):
+        available = [book.get_info() for book in self.books if not book.is_checked_out]
+        return available if available else ["No books available."]
+
+library = Library()
+
+# Add multiple books
+library.add_book(LibraryBook("The Great Gatsby", "F. Scott Fitzgerald"))
+library.add_book(LibraryBook("1984", "George Orwell"))
+library.add_book(LibraryBook("To Kill a Mockingbird", "Harper Lee"))
+
+# Check out some books
+print(library.check_out_book("1984"))
+print(library.check_out_book("The Great Gatsby"))
+print(library.check_out_book("The Great Gatsby"))  # Error: already checked out
+print(library.check_out_book("Unknown Book"))      # Error: not in library
+
+# Return a book
+print(library.return_book("1984"))
+print(library.return_book("1984"))  # Error: not checked out
+
+# List available books
+print("\nAvailable Books:")
+for info in library.list_available_books():
+    print(info) 
