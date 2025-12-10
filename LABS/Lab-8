@@ -1,0 +1,136 @@
+Working with SQLite Database using Python
+
+Lab Exercises
+ Task 1: Basic Operations 
+1. Create a new database called library.db
+2. Create a table called books with columns: id, title, author, year, available (boolean)
+3. Insert 5 books into the table 
+4. Retrieve and print all books
+
+import sqlite3
+connection = sqlite3.connect('library.db')
+cursor = connection.cursor()
+
+cursor.execute('''
+CREATE TABLE IF NOT EXISTS books (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    title TEXT NOT NULL,
+    author TEXT,
+    year INTEGER,
+    available BOOLEAN
+)
+''')
+connection.commit()
+books = [
+    ("The Alchemist", "Paulo Coelho", 1988, True),
+    ("Atomic Habits", "James Clear", 2018, True),
+    ("1984", "George Orwell", 1949, False),
+    ("The Silent Patient", "Alex Michaelides", 2019, True),
+    ("To Kill a Mockingbird", "Harper Lee", 1960, False)
+]
+cursor.executemany("INSERT INTO books (title, author, year, available) VALUES (?, ?, ?, ?)", books)
+connection.commit()
+cursor.execute("SELECT * FROM books")
+for b in cursor.fetchall():
+    print(b)
+connection.close()
+ 
+ Task 2: Queries 
+1. Find all books published after 2010
+2. Count how many books are available 3. List all unique authors 
+
+import sqlite3
+
+connection = sqlite3.connect('library.db')
+cursor = connection.cursor()
+cursor.execute("SELECT * FROM books WHERE year > 2010")
+print("Books after 2010:")
+for b in cursor.fetchall():
+    print(b)
+
+cursor.execute("SELECT COUNT(*) FROM books WHERE available = 1")
+print("\nAvailable books:", cursor.fetchone()[0])
+
+cursor.execute("SELECT DISTINCT author FROM books")
+print("\nUnique authors:")
+for a in cursor.fetchall():
+    print(a[0])
+
+connection.close()
+ 
+Task 3: Updates and Deletes 
+1. Update a book's availability status 
+2. Delete books older than 1950
+3. Update all books by a specific author to mark them as unavailable 
+
+import sqlite3
+
+connection = sqlite3.connect('library.db')
+cursor = connection.cursor()
+cursor.execute("UPDATE books SET available = 0 WHERE title = 'Atomic Habits'")
+connection.commit()
+cursor.execute("DELETE FROM books WHERE year < 1950")
+connection.commit()
+
+cursor.execute("UPDATE books SET available = 0 WHERE author = 'Harper Lee'")
+connection.commit()
+cursor.execute("SELECT * FROM books")
+for b in cursor.fetchall():
+    print(b)
+connection.close()
+ 
+
+Task 4: File Operations 
+1. Export your books table to a CSV file 
+2. Create a new table borrowed_books 
+3. Write a function that moves a book from books to borrowed_books
+
+import sqlite3
+import csv
+
+connection = sqlite3.connect('library.db')
+cursor = connection.cursor()
+
+cursor.execute("SELECT * FROM books")
+data = cursor.fetchall()
+column_names = [d[0] for d in cursor.description]
+
+with open('books_export.csv', 'w', newline='') as f:
+    writer = csv.writer(f)
+    writer.writerow(column_names)
+    writer.writerows(data)
+
+cursor.execute('''
+CREATE TABLE IF NOT EXISTS borrowed_books (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    title TEXT,
+    author TEXT,
+    year INTEGER,
+    available BOOLEAN
+)
+''')
+connection.commit()
+
+def borrow_book(book_id):
+    cursor.execute("SELECT * FROM books WHERE id = ?", (book_id,))
+    book = cursor.fetchone()
+    if book:
+        cursor.execute("INSERT INTO borrowed_books (title, author, year, available) VALUES (?, ?, ?,?)",
+                       (book[1], book[2], book[3], False))
+        cursor.execute("DELETE FROM books WHERE id = ?", (book_id,))
+        connection.commit()
+        print(f"Book ID {book_id} moved to borrowed_books")
+
+borrow_book(2)
+
+print("Remaining books:")
+cursor.execute("SELECT * FROM books")
+for b in cursor.fetchall():
+    print(b)
+
+print("\nBorrowed books:")
+cursor.execute("SELECT * FROM borrowed_books")
+for b in cursor.fetchall():
+    print(b)
+
+connection.close()
